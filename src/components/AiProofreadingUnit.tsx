@@ -55,34 +55,34 @@ export default function AiProofreadingUnit({
   const [isAllApplied, setIsAllApplied] = useState(false);
   const [showExplanationModal, setShowExplanationModal] = useState<ProofreadSuggestion | null>(null);
 
-const res = await fetch(
-  "https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      stem,
-      options,
-      correctAnswer,
-      qType,
-      lang,
-    }),
-  }
-);
+  const handleRunProofreading = async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const res = await fetch(
+        "https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            stem,
+            options,
+            correctAnswer,
+            qType,
+            lang,
+          }),
+        }
+      );
 
-const data = await res.json();
+      const data = await res.json();
 
-if (!res.ok) {
-  throw new Error(
-    data.error ||
-      (isRtl
-        ? "فشل التدقيق اللغوي والنحوي"
-        : "Proofreading failed")
-  );
-}
-  const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || (isRtl ? "فشل التدقيق اللغوي والنحوي" : "Proofreading failed"));
+        throw new Error(
+          data.error ||
+            (isRtl
+              ? "فشل التدقيق اللغوي والنحوي"
+              : "Proofreading failed")
+        );
       }
 
       setResult(data);
