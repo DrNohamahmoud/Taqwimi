@@ -70,6 +70,16 @@ const res = await fetch(
   }
 );
 
+const data = await res.json();
+
+if (!res.ok) {
+  throw new Error(
+    data.error ||
+      (isRtl
+        ? "فشل التدقيق اللغوي والنحوي"
+        : "Proofreading failed")
+  );
+}
   const data = await res.json();
       if (!res.ok) {
         throw new Error(data.error || (isRtl ? "فشل التدقيق اللغوي والنحوي" : "Proofreading failed"));
