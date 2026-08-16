@@ -55,12 +55,9 @@ export default function AiProofreadingUnit({
   const [isAllApplied, setIsAllApplied] = useState(false);
   const [showExplanationModal, setShowExplanationModal] = useState<ProofreadSuggestion | null>(null);
 
-  const handleRunProofreading = async () => {
-    setIsLoading(true);
-    setError("");
-    setIsAllApplied(false);
-    try {
-  const res = await fetch("https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question", {
+const res = await fetch(
+  "https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question",
+  {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -70,7 +67,8 @@ export default function AiProofreadingUnit({
       qType,
       lang,
     }),
-  });
+  }
+);
 
   const data = await res.json();
       if (!res.ok) {
