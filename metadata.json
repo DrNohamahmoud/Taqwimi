@@ -1,0 +1,11 @@
+{
+  "name": "Taqwimi",
+  "description": "خبيرك التربوي الذكي لصياغة وتحكيم وتحليل الأسئلة والاختبارات الأكاديمية",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
