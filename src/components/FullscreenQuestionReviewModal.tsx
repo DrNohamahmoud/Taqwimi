@@ -493,6 +493,24 @@ const handleRunAiAudit = async () => {
   }
 };
 
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(
+        data.error || (isRtl ? "تعذر التدقيق" : "Audit failed")
+      );
+    }
+
+    setAiAuditResult(data);
+  } catch (err: any) {
+    setAiAuditError(
+      err.message || (isRtl ? "حدث خطأ أثناء التحكيم" : "Audit failed")
+    );
+  } finally {
+    setIsAiAuditing(false);
+  }
+};
+
   // Adopt AI Audit suggestions
   const handleAdoptAiSuggestions = () => {
     if (!aiAuditResult) return;
