@@ -59,31 +59,31 @@ export default function AiProofreadingUnit({
     setIsLoading(true);
     setError("");
     try {
-      const res = await fetch(
-        "https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            stem,
-            options,
-            correctAnswer,
-            qType,
-            lang,
-          }),
-        }
-      );
+const res = await fetch(
+  "https://taqwimi-backend.noha-mahmoud.workers.dev/api/proofread-question",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      stem,
+      options,
+      correctAnswer,
+      qType,
+      lang,
+    }),
+  }
+);
 
-      const data = await res.json();
+const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(
-          data.error ||
-            (isRtl
-              ? "فشل التدقيق اللغوي والنحوي"
-              : "Proofreading failed")
-        );
-      }
+if (!res.ok) {
+  throw new Error(
+    data.error ||
+      (isRtl
+        ? "فشل التدقيق اللغوي والنحوي"
+        : "Proofreading failed")
+  );
+}
 
       setResult(data);
       setAppliedSuggestions({});
