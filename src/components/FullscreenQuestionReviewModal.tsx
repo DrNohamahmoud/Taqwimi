@@ -454,14 +454,7 @@ export default function FullscreenQuestionReviewModal({
     setIsAiAuditing(true);
     setAiAuditError("");
     try {
-const handleRunAiAudit = async () => {
-  setIsAiAuditing(true);
-  setAiAuditError("");
-
-  try {
-    const res = await fetch(
-      "https://taqwimi-backend.noha-mahmoud.workers.dev/api/audit-question",
-      {
+      const res = await fetch("/api/audit-question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -472,44 +465,16 @@ const handleRunAiAudit = async () => {
           lang,
           stage: "2",
         }),
-      }
-    );
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(
-        data.error || (isRtl ? "تعذر التدقيق" : "Audit failed")
-      );
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || (isRtl ? "تعذر التدقيق" : "Audit failed"));
+      setAiAuditResult(data);
+    } catch (err: any) {
+      setAiAuditError(err.message || (isRtl ? "حدث خطأ أثناء التدقيق" : "Error"));
+    } finally {
+      setIsAiAuditing(false);
     }
-
-    setAiAuditResult(data);
-  } catch (err: any) {
-    setAiAuditError(
-      err.message || (isRtl ? "حدث خطأ أثناء التحكيم" : "Audit failed")
-    );
-  } finally {
-    setIsAiAuditing(false);
-  }
-};
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(
-        data.error || (isRtl ? "تعذر التدقيق" : "Audit failed")
-      );
-    }
-
-    setAiAuditResult(data);
-  } catch (err: any) {
-    setAiAuditError(
-      err.message || (isRtl ? "حدث خطأ أثناء التحكيم" : "Audit failed")
-    );
-  } finally {
-    setIsAiAuditing(false);
-  }
-};
+  };
 
   // Adopt AI Audit suggestions
   const handleAdoptAiSuggestions = () => {
